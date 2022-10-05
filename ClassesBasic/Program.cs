@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 abstract class Worker
 {
     public string Name { get; }
@@ -87,10 +89,46 @@ class Team
         }
     }
 }
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+    static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.Write("Введіть назву команди: ");
+        string team_name = Console.ReadLine();
+        Team t = new Team(team_name);
+
+        bool exit = true;
+        do
+        {
+            Console.WriteLine("'eхit' - щоб вийти, 'add' - щоб додати співробітника, 'info' - інфа про команду, 'dinfo' - детальна інфа про команду ");
+            string command = Console.ReadLine();
+            if (command == "exit") exit = false;
+            else if (command == "add")
+            {
+                Console.Write("Введіть ПІП співробітника ");
+                string worker_name = Console.ReadLine();
+                Console.Write("Введіть тип співробітника: 'd' - Розробник 'm' - Менеджер ");
+                string worker_type = Console.ReadLine();
+
+                if (worker_type == "d")
+                {
+                    Developer d = new Developer(worker_name);
+                    t.AddWorker(d);
+                }
+                else if (worker_type == "m")
+                {
+                    Manager m = new Manager(worker_name);
+                    t.AddWorker(m);
+                }
+                else Console.WriteLine("Не коректне введення");
+            }
+            else if (command == "info") t.InfoAboutTeam();
+            else if (command == "dinfo") t.DetailInfoAboutTeam();
+            else Console.WriteLine("Не коректне введення");
+        }
+        while (exit);
+
+        Console.ReadKey();
     }
 }
