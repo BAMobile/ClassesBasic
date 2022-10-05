@@ -10,17 +10,24 @@ abstract class Worker
         Name = name;
     }
 
+    void AddTask(string task)
+    {
+        WorkDay = string.IsNullOrEmpty(WorkDay) ? task : WorkDay + $", {task}";
+    }
     public void Call()
     {
-        Console.WriteLine("Caaall");
+        AddTask("Call");
+        //Console.WriteLine("Caaall");
     }
     public void WriteCode()
     {
-        Console.WriteLine("Write Code");
+        AddTask("WriteCode");
+        //Console.WriteLine("Write Code");
     }
     public void Relax()
     {
-        Console.WriteLine("Relaaaax");
+        AddTask("Relax");
+        //Console.WriteLine("Relaaaax");
     }
     public abstract void FillWorkDay();
 }
@@ -70,6 +77,7 @@ class Team
     }
     public void AddWorker(Worker worker)
     {
+        worker.FillWorkDay();
         workers.Add(worker);
     }
     public void InfoAboutTeam()
